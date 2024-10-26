@@ -1,4 +1,3 @@
-import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import { useState } from "react";
 import { HiOutlineMenu } from "react-icons/hi";
 import { Link, NavLink, useLocation } from "react-router-dom";
@@ -12,34 +11,42 @@ const NavBar = () => {
       <NavLink
         to={"/"}
         className={({ isActive }) =>
-          isActive ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300" : "rounded-lg hover:bg-blue-300"
+          isActive
+            ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300"
+            : "rounded-lg hover:bg-blue-300"
         }
       >
-        <li className="p-2 text-gl font-semibold ">Home</li>
+        <li className="p-2  font-semibold ">Home</li>
       </NavLink>
       <NavLink
         to={"/AllSport"}
         className={({ isActive }) =>
-          isActive ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300" : "rounded-lg hover:bg-blue-300"
+          isActive
+            ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300"
+            : "rounded-lg hover:bg-blue-300"
         }
       >
-        <li className="p-2 text-gl font-semibold ">Tourist Spot</li>
+        <li className="p-2  font-semibold ">Tourist Spot</li>
       </NavLink>
       <NavLink
         to={"/UpdateSpot"}
         className={({ isActive }) =>
-          isActive ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300" : "rounded-lg hover:bg-blue-300"
+          isActive
+            ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300"
+            : "rounded-lg hover:bg-blue-300"
         }
       >
-        <li className="p-2 text-gl font-semibold ">Upload Spot</li>
+        <li className="p-2  font-semibold ">Upload Spot</li>
       </NavLink>
       <NavLink
-        to={"/"}
+        to={"/My List"}
         className={({ isActive }) =>
-          isActive ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300" : "rounded-lg hover:bg-blue-300"
+          isActive
+            ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300"
+            : "rounded-lg hover:bg-blue-300"
         }
       >
-        <li className="p-2 text-gl font-semibold ">sdasd</li>
+        <li className="p-2  font-semibold ">My List</li>
       </NavLink>
     </>
   );
@@ -52,7 +59,9 @@ const NavBar = () => {
             <h1 className="text-4xl font-bold">Tourism Hub</h1>
           </Link>
 
-          <ul className="items-stretch hidden space-x-3 lg:flex">{navLink}</ul>
+          <ul className="items-stretch hidden space-x-3 lg:flex text-lg">
+            {navLink}
+          </ul>
           <div className="items-center flex-shrink-0 hidden lg:flex">
             <Link
               href="#_"
@@ -79,7 +88,7 @@ const NavBar = () => {
               }
                absolute `}
             >
-              <ul className="bg-slate-200 rounded-lg p-2 w-32 text-left flex flex-col gap-2">
+              <ul className="bg-slate-200 rounded-lg p-2 w-32 text-base text-left flex flex-col gap-2">
                 {navLink}
               </ul>
             </div>
