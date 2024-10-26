@@ -1,7 +1,7 @@
 import { Footer } from "flowbite-react";
 const FooterSection = () => {
   return (
-    <div className="bg-[#F3F4F6]">
+    <div className="bg-[#F3F4F6] min-w-[640px]">
       <Footer container className="bg-[#F3F4F6]">
         <div className="w-full text-center">
           <div className="w-full justify-around sm:flex sm:items-center sm:justify-between">

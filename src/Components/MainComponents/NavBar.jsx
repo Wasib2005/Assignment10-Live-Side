@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { HiOutlineMenu } from "react-icons/hi";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const NavBar = () => {
-  const location = useLocation();
   const [dropdownOn, setDropdownOn] = useState(true);
-  console.log(location.pathname == "/");
   const navLink = (
     <>
       <NavLink
@@ -76,15 +74,15 @@ const NavBar = () => {
           <button className="p-4 lg:hidden text-4xl relative">
             <div
               onClick={() => setDropdownOn(!dropdownOn)}
-              className={`duration-700 ${
+              className={`duration-[600ms] ${
                 dropdownOn || "rotate-[90deg]"
               } hover:bg-slate-50`}
             >
               <HiOutlineMenu />
             </div>
             <div
-              className={`duration-700 z-0 text-xl translate-y-[10px] ${
-                dropdownOn ? "translate-x-[500px]" : "translate-x-[-90px]"
+              className={`duration-[600ms] z-0 text-xl translate-y-[10px] ${
+                dropdownOn ? "translate-x-[100px]" : "translate-x-[-90px]"
               }
                absolute `}
             >

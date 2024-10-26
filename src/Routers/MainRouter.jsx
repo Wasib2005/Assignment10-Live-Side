@@ -11,6 +11,7 @@ export const mainRouter = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+        loader: ()=>fetch("http://localhost:5000/spot/0/5")
       },
       {
         path: "/AllSpots",
