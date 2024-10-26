@@ -1,0 +1,93 @@
+import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import { useState } from "react";
+import { HiOutlineMenu } from "react-icons/hi";
+import { Link, NavLink, useLocation } from "react-router-dom";
+
+const NavBar = () => {
+  const location = useLocation();
+  const [dropdownOn, setDropdownOn] = useState(true);
+  console.log(location.pathname == "/");
+  const navLink = (
+    <>
+      <NavLink
+        to={"/"}
+        className={({ isActive }) =>
+          isActive ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300" : "rounded-lg hover:bg-blue-300"
+        }
+      >
+        <li className="p-2 text-gl font-semibold ">Home</li>
+      </NavLink>
+      <NavLink
+        to={"/AllSport"}
+        className={({ isActive }) =>
+          isActive ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300" : "rounded-lg hover:bg-blue-300"
+        }
+      >
+        <li className="p-2 text-gl font-semibold ">Tourist Spot</li>
+      </NavLink>
+      <NavLink
+        to={"/UpdateSpot"}
+        className={({ isActive }) =>
+          isActive ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300" : "rounded-lg hover:bg-blue-300"
+        }
+      >
+        <li className="p-2 text-gl font-semibold ">Upload Spot</li>
+      </NavLink>
+      <NavLink
+        to={"/"}
+        className={({ isActive }) =>
+          isActive ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300" : "rounded-lg hover:bg-blue-300"
+        }
+      >
+        <li className="p-2 text-gl font-semibold ">sdasd</li>
+      </NavLink>
+    </>
+  );
+  return (
+    <div>
+      <nav className="p-4 bg-gray-100 text-gray-800 fixed w-full z-[990] ">
+        <div className="container flex justify-between items-center h-16 mx-auto">
+          <Link className="flex items-center">
+            <img src="favicon.svg" alt="icon" className="w-[50px]" />
+            <h1 className="text-4xl font-bold">Tourism Hub</h1>
+          </Link>
+
+          <ul className="items-stretch hidden space-x-3 lg:flex">{navLink}</ul>
+          <div className="items-center flex-shrink-0 hidden lg:flex">
+            <Link
+              href="#_"
+              className=" font-semibold rounded-lg px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 border-sky-400 text-sky-400"
+            >
+              <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-sky-400 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease" />
+              <span className="relative text-sky-400 transition duration-300 group-hover:text-white ease">
+                Sing In
+              </span>
+            </Link>
+          </div>
+          <button className="p-4 lg:hidden text-4xl relative">
+            <div
+              onClick={() => setDropdownOn(!dropdownOn)}
+              className={`duration-700 ${
+                dropdownOn || "rotate-[90deg]"
+              } hover:bg-slate-50`}
+            >
+              <HiOutlineMenu />
+            </div>
+            <div
+              className={`duration-700 z-0 text-xl translate-y-[10px] ${
+                dropdownOn ? "translate-x-[500px]" : "translate-x-[-90px]"
+              }
+               absolute `}
+            >
+              <ul className="bg-slate-200 rounded-lg p-2 w-32 text-left flex flex-col gap-2">
+                {navLink}
+              </ul>
+            </div>
+          </button>
+        </div>
+      </nav>
+    </div>
+  );
+};
+
+export default NavBar;
