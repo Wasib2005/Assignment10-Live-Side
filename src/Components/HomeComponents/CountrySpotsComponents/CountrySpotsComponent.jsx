@@ -21,12 +21,12 @@ const CountrySpotsComponent = () => {
   const { chosenCountry, result } = touristsSpotData;
   console.log(chosenCountry, result);
   return (
-    <div className="mt-[50px] md:mt-[100px] text-center grid gap-3">
+    <div className="mt-[100px] text-center grid gap-3 mb-16">
       <h1 className="text-3xl md:text-5xl font-bold">
         Tourist spots in <span>{chosenCountry}</span>
       </h1>
       <p>Below Some of the Famous Tourists Spot added by our users</p>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-9">
+      <div className=" mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-9">
         {result.map((touristsSpot, i) => (
           <SpotCart key={i} touristsSpot={touristsSpot} />
         ))}
