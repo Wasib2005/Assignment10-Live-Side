@@ -1,10 +1,16 @@
 import PropTypes from "prop-types";
+import { FaRegClock } from "react-icons/fa";
 import { IoPeopleCircle } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 const Banner = ({ touristsSpot }) => {
-  const { image, country_Name, tourists_spot_name, totalVisitorsPerYear } =
-    touristsSpot;
+  const {
+    image,
+    country_Name,
+    tourists_spot_name,
+    totalVisitorsPerYear,
+    travel_time,
+  } = touristsSpot;
   return (
     <div className="">
       <div className="relative">
@@ -23,9 +29,9 @@ const Banner = ({ touristsSpot }) => {
             </p>
             <p className="text-slate-200 text-lg flex items-center gap-2">
               <span>
-                <IoPeopleCircle />
+                <FaRegClock />
               </span>
-              <span>{totalVisitorsPerYear}</span>
+              <span>{travel_time} days</span>
             </p>
           </div>
           <div>
