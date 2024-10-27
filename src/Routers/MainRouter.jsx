@@ -11,11 +11,12 @@ export const mainRouter = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: ()=>fetch("http://localhost:5000/spot/0/5")
+        loader: ()=>fetch(`${import.meta.env.VITE_DATABASE_URL}/spot/0/5`)
       },
       {
-        path: "/AllSpots",
+        path: "/AllSpot",
         element: <AllSpot />,
+        loader:()=>fetch(`${import.meta.env.VITE_DATABASE_URL}/spot`)
       },
     ],
   },

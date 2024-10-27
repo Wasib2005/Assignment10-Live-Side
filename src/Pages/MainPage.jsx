@@ -7,7 +7,7 @@ const MainPage = () => {
     <div>
       <NavBar />
       <div className="h-[96px]" />
-      <div className="min-h-[calc(100vh-96px-165px)] p-5 m-auto w-[640px] md:w-[750px] lg:w-[1300px]" >
+      <div className="min-h-[calc(100vh-96px-165px-70px)] md:min-h-[calc(100vh-96px-165px-100px)] p-5 m-auto w-[640px] md:w-[750px] lg:w-[1300px]" >
         <Outlet />
       </div>
       <FooterSection />

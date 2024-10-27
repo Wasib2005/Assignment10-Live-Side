@@ -5,7 +5,7 @@ const SomeSpots = () => {
   const [touristsSpotData, setTouristsSpotData] = useState(null);
 
   const touristsSpotLoadData = () => {
-    fetch("http://localhost:5000/random/12")
+    fetch(`${import.meta.env.VITE_DATABASE_URL}/random/6`)
       .then((response) => response.json())
       .then((data) => setTouristsSpotData(data))
       .catch((error) => console.error("Error:", error));
@@ -15,17 +15,19 @@ const SomeSpots = () => {
     touristsSpotLoadData();
   }, []);
 
+  if (!touristsSpotData){
+    return <p>Loading</p>
+  }
+
   return (
     <div>
-      <h1 className="text-4xl md:text-5xl text-center font-bold my-10 md:my-20">Some Tourists Spot Added by Our User</h1>
+      <h1 className="text-4xl md:text-5xl text-center font-bold my-10 md:my-20">
+        Some Tourists Spot Added by Our User
+      </h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-9">
-        {touristsSpotData ? (
-          touristsSpotData.map((touristsSpot) => (
-            <SpotCart key={touristsSpot._id} touristsSpot={touristsSpot} />
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
+        {touristsSpotData.map((touristsSpot) => (
+          <SpotCart key={touristsSpot._id} touristsSpot={touristsSpot} />
+        ))}
       </div>
     </div>
   );

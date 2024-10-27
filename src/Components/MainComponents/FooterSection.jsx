@@ -1,7 +1,7 @@
 import { Footer } from "flowbite-react";
 const FooterSection = () => {
   return (
-    <div className="bg-[#F3F4F6] min-w-[640px]">
+    <div className="bg-[#F3F4F6] min-w-[640px] mt-[50px] md:mt-[100px]">
       <Footer container className="bg-[#F3F4F6]">
         <div className="w-full text-center">
           <div className="w-full justify-around sm:flex sm:items-center sm:justify-between">
@@ -9,7 +9,7 @@ const FooterSection = () => {
               href="/"
               src="favicon.svg"
               alt="Flowbite Logo"
-              name="Tourism Hub"
+              name="Asian Tourism Hub"
             />
             <Footer.LinkGroup>
               <Footer.Link href="#">About</Footer.Link>

@@ -17,7 +17,7 @@ const NavBar = () => {
         <li className="p-2  font-semibold ">Home</li>
       </NavLink>
       <NavLink
-        to={"/AllSport"}
+        to={"/AllSpot"}
         className={({ isActive }) =>
           isActive
             ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300"
@@ -54,7 +54,7 @@ const NavBar = () => {
         <div className="container flex justify-between items-center h-16 mx-auto">
           <Link className="flex items-center">
             <img src="favicon.svg" alt="icon" className="w-[50px]" />
-            <h1 className="text-4xl font-bold">Tourism Hub</h1>
+            <h1 className="text-4xl font-bold">Asian Tourism Hub</h1>
           </Link>
 
           <ul className="items-stretch hidden space-x-3 lg:flex text-lg">
