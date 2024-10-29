@@ -82,7 +82,7 @@ const NavBar = () => {
             </div>
             <div
               className={`duration-[600ms] z-0 text-xl translate-y-[10px] ${
-                dropdownOn ? "translate-x-[100px]" : "translate-x-[-90px]"
+                dropdownOn ? "translate-x-[190px]" : "translate-x-[-90px]"
               }
                absolute `}
             >

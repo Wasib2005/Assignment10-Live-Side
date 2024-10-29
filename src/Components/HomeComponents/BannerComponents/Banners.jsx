@@ -10,7 +10,7 @@ const Banners = () => {
   }
   return (
     <div className="mt-4 md:mt-16">
-      <div className="m-auto h-[220px] md:h-[320px] lg:h-[550px] w-[600px] md:w-[700px] lg:w-[1200px]">
+      <div className="m-auto h-[220px] md:h-[320px] lg:h-[600px] w-[600px] md:w-[700px] lg:w-[1200px]">
         <Carousel 
         // slideInterval={1000}
         >

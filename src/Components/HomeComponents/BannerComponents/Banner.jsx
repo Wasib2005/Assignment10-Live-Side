@@ -14,7 +14,11 @@ const Banner = ({ touristsSpot }) => {
   return (
     <div className="">
       <div className="relative">
-        <img src={image} alt="" />
+        <img
+          src={image}
+          alt=""
+          className="m-auto h-[220px] md:h-[320px] lg:h-[600px] w-[600px] md:w-[700px] lg:w-[1200px]"
+        />
         <div className="absolute top-0 border bg-black opacity-30 w-full h-full z-[1]" />
         <div className="absolute top-6 md:top-20 lg:top-32 left-[84px]  z-[2] grid gap-3 lg:gap-7">
           <h1 className="text-2xl md:text-3xl lg:text-6xl font-bold  text-white w-[330px] lg:w-[700px]">
@@ -35,7 +39,10 @@ const Banner = ({ touristsSpot }) => {
             </p>
           </div>
           <div>
-            <Link to={"/AllSpot"} className="relative inline-flex items-center justify-start py-2 md:py-3 pl-2 md:pl-4 pr-12 overflow-hidden text-base md:text-xl font-semibold text-blue-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group">
+            <Link
+              to={"/AllSpot"}
+              className="relative inline-flex items-center justify-start py-2 md:py-3 pl-2 md:pl-4 pr-12 overflow-hidden text-base md:text-xl font-semibold text-blue-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group"
+            >
               <span className="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-blue-600 group-hover:h-full" />
               <span className="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
                 <svg
