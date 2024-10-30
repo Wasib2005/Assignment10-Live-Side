@@ -30,6 +30,8 @@ function UserLog() {
       const password = form.password.value;
       singInWithEmailAndPass(email, password);
     } else {
+      const name = form.name.value;
+      console.log(name);
       const email = form.email.value;
       const password = form.password.value;
       const cPassword = form.cPassword.value;
@@ -53,7 +55,7 @@ function UserLog() {
         toast.error("The passwords don't match");
         return;
       }
-      singUpWithEmailAndPass(email, password);
+      singUpWithEmailAndPass(email, password, name);
     }
   };
   return (

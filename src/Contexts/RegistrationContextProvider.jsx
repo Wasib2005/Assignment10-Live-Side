@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { auth } from "../Utilities/fireBaseConfig";
 import toast from "react-hot-toast";
@@ -12,12 +13,23 @@ import toast from "react-hot-toast";
 const RegistrationContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  
+  const provider = new GoogleAuthProvider();
+  
+  const singUpWithEmailAndPass = (email, password, name) => {
+    console.log({ userEmail: email, userName: name });
 
-  const singUpWithEmailAndPass = (email, password) => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((result) => {
-        toast.success(`Thanks for joining with us, 
+      .then(async (result) => {
+        await toast.success(`Thanks for joining with us,
           ${result.user.displayName || result.user.email}!!!`);
+        await fetch(`${import.meta.env.VITE_DATABASE_URL}/createUsers`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userEmail: email, userName: name }),
+        }).catch((error) => console.log(error));
       })
       .catch((error) =>
         toast.error(
@@ -45,6 +57,13 @@ const RegistrationContextProvider = ({ children }) => {
       );
   };
 
+
+  const userSingOut = () => {
+    signOut(auth)
+      .then(toast.success("Sing out successful"))
+      .catch(toast.error("Something went wrong!!! Please Contact with us."));
+  };
+
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -56,6 +75,7 @@ const RegistrationContextProvider = ({ children }) => {
   const userData = {
     user,
     isLoading,
+    userSingOut,
     singUpWithEmailAndPass,
     singInWithEmailAndPass,
   };
