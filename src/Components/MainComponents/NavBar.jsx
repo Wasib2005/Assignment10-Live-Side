@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { HiOutlineMenu } from "react-icons/hi";
 import { Link, NavLink } from "react-router-dom";
+import { RegistrationContext } from "../../Contexts/RegistrationContext";
+import { Avatar, Tooltip } from "flowbite-react";
 
 const NavBar = () => {
-  const [dropdownOn, setDropdownOn] = useState(true);
+  const [dropdownOff, setDropdownOff] = useState(true);
+  const { user, userSingOut } = useContext(RegistrationContext);
   const navLink = (
     <>
       <NavLink
@@ -60,37 +63,134 @@ const NavBar = () => {
           <ul className="items-stretch hidden space-x-3 lg:flex text-lg">
             {navLink}
           </ul>
-          <div className="items-center flex-shrink-0 hidden lg:flex">
-            <Link
-              to={"/Registration"}
-              className=" font-semibold rounded-lg px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 border-sky-400 text-sky-400"
-            >
-              <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-sky-400 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease" />
-              <span className="relative text-sky-400 transition duration-300 group-hover:text-white ease">
-                Sing In
-              </span>
-            </Link>
+          <div className="items-center flex-shrink-0 hidden lg:flex relative">
+            {user ? (
+              <>
+                <div
+                  onClick={() => setDropdownOff(!dropdownOff)}
+                  className={`hover:bg-slate-50`}
+                >
+                  <Tooltip
+                    content={user.displayName || user.email}
+                    style="light"
+                    placement="bottom"
+                  >
+                    {user.photoURL ? (
+                      <Avatar
+                        img={user.photoURL}
+                        alt={`avatar of ${user.displayName || user.email}`}
+                        rounded
+                      />
+                    ) : (
+                      <div>
+                        <p>
+                          {user.displayName.slice(0, 2) ||
+                            user.email.slice(0, 2)}
+                        </p>
+                      </div>
+                    )}
+                  </Tooltip>
+                </div>
+                <div
+                  className={`duration-[600ms] z-0 text-xl translate-y-[10px] absolute right-0 -bottom-4
+                     ${
+                       dropdownOff
+                         ? " translate-y-[-190px] "
+                         : " translate-y-[100px] "
+                     }
+               `}
+                >
+                  <ul className="bg-slate-200 rounded-lg p-2 w-32 text-base text-left flex flex-col gap-2">
+                    <Link
+                      to={"/Profile"}
+                      className="rounded-lg hover:bg-blue-300"
+                    >
+                      <li className="p-2  font-semibold ">Profile</li>
+                    </Link>
+                    {user.emailVerified || (
+                      <Link
+                        to={"/Profile"}
+                        className="rounded-lg hover:bg-blue-300"
+                      >
+                        <li className="p-2  font-semibold ">Verify</li>
+                      </Link>
+                    )}
+                    <button
+                      onClick={userSingOut}
+                      className="text-left rounded-lg hover:bg-blue-300"
+                    >
+                      <li className="p-2  font-semibold ">Sing Out</li>
+                    </button>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <Link
+                to={"/Registration"}
+                className=" font-semibold rounded-lg px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 border-sky-400 text-sky-400"
+              >
+                <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-sky-400 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease" />
+                <span className="relative text-sky-400 transition duration-300 group-hover:text-white ease">
+                  Sing In
+                </span>
+              </Link>
+            )}
           </div>
-          <button className="p-4 lg:hidden text-4xl relative">
+          <div className="p-4 lg:hidden text-4xl relative">
             <div
-              onClick={() => setDropdownOn(!dropdownOn)}
+              onClick={() => setDropdownOff(!dropdownOff)}
               className={`duration-[600ms] ${
-                dropdownOn || "rotate-[90deg]"
+                dropdownOff || "rotate-[90deg]"
               } hover:bg-slate-50`}
             >
               <HiOutlineMenu />
             </div>
             <div
               className={`duration-[600ms] z-0 text-xl translate-y-[10px] ${
-                dropdownOn ? "translate-x-[190px]" : "translate-x-[-90px]"
+                dropdownOff ? "translate-x-[190px]" : "translate-x-[-90px]"
               }
                absolute `}
             >
               <ul className="bg-slate-200 rounded-lg p-2 w-32 text-base text-left flex flex-col gap-2">
+                {user ? (
+                  <NavLink
+                    to={"/Profile"}
+                    className="rounded-lg hover:bg-blue-300"
+                  >
+                    <Tooltip
+                      content={user.displayName || user.email}
+                      style="light"
+                      placement="left"
+                    >
+                      <li className="p-2  font-semibold ">Profile</li>
+                    </Tooltip>
+                  </NavLink>
+                ) : (
+                  <></>
+                )}
                 {navLink}
+                {user ? (
+                  <button
+                    onClick={userSingOut}
+                    className="text-left rounded-lg hover:bg-blue-300"
+                  >
+                    <li className="p-2  font-semibold ">Sing Out</li>
+                  </button>
+                ) : (
+                  <NavLink
+                    to={"/Registration"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300"
+                        : "rounded-lg hover:bg-blue-300"
+                    }
+                  >
+                    <li className="p-2  font-semibold ">Sing In</li>
+                  </NavLink>
+                )}
               </ul>
             </div>
-          </button>
+          </div>
         </div>
       </nav>
     </div>
