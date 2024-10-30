@@ -54,13 +54,6 @@ const AllSpot = () => {
       .catch((error) => console.error("Error:", error));
   }, [sortBy, sortByValue, country]);
 
-  // console.log(spotData);
-  // console.log(sortBy, sortByValue, country);
-  console.log(
-    `${
-      import.meta.env.VITE_DATABASE_URL
-    }/spot/${sortBy}/${sortByValue}/${country}`
-  );
 
   if (!countryName) {
     return <p>Loading...</p>;

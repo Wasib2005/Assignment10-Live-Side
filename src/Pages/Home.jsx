@@ -1,9 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigation } from "react-router-dom";
 import Banners from "../Components/HomeComponents/BannerComponents/Banners";
 import CountrySpotsComponent from "../Components/HomeComponents/CountrySpotsComponents/CountrySpotsComponent";
 import SomeSpots from "../Components/HomeComponents/SomeSpotsComponents/SomeSpots";
+import Loader from "../Components/MainComponents/Loader";
 
 const Home = () => {
+  const navigation = useNavigation()
+
+  if (navigation.state === "loading"){
+    return(
+      <Loader/>
+    )
+  }
   return (
     <div>
       <Banners />

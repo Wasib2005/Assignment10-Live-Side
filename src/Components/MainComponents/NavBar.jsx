@@ -62,7 +62,7 @@ const NavBar = () => {
           </ul>
           <div className="items-center flex-shrink-0 hidden lg:flex">
             <Link
-              href="#_"
+              to={"/Registration"}
               className=" font-semibold rounded-lg px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 border-sky-400 text-sky-400"
             >
               <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-sky-400 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease" />

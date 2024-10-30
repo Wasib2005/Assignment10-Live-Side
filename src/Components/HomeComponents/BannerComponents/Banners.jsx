@@ -4,7 +4,6 @@ import Banner from "./Banner";
 
 const Banners = () => {
   const touristsSpotData = useLoaderData();
-  console.log(import.meta.env.VITE_DATABASE_URL)
   if (!touristsSpotData){
     return <p>Loading</p>
   }
