@@ -12,8 +12,13 @@ function UserLog() {
   const [showPasswordC, setShowPasswordC] = useState(false);
   const [color, setColor] = useState(true);
 
-  const { singUpWithEmailAndPass, singInWithEmailAndPass } =
-    useContext(RegistrationContext);
+  const {
+    singUpWithEmailAndPass,
+    singInWithEmailAndPass,
+    googleAuth,
+    userSingOut,
+    user,
+  } = useContext(RegistrationContext);
 
   const singIn_singUpHandle = () => {
     setSingInOn(!singInOn);
@@ -61,6 +66,7 @@ function UserLog() {
   return (
     <>
       <div className=" bg-slate-400 h-[100vh]">
+        <button onClick={userSingOut}>fddsg</button>
         <div className="h-[100px] flex items-center justify-center md:mb-[100px] pt-28">
           <img src="favicon.svg" alt="" className="w-12" />
           <Link to={"/"} className="text-2xl md:text-4xl font-bold">
@@ -93,7 +99,10 @@ function UserLog() {
                   {color ? "Sing In" : "Sing Up"}
                 </h1>
                 <div className="text-2xl flex gap-2 justify-center">
-                  <button className="w-9 h-9 flex items-center justify-center  border rounded-full border-slate-400 hover:border-none hover:bg-slate-600">
+                  <button
+                    onClick={googleAuth}
+                    className="w-9 h-9 flex items-center justify-center  border rounded-full border-slate-400 hover:border-none hover:bg-slate-600"
+                  >
                     <FaGoogle />
                   </button>
                   <button className="w-9 h-9 flex items-center justify-center  border rounded-full border-slate-400 hover:border-none hover:bg-slate-600">

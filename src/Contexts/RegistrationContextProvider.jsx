@@ -3,8 +3,10 @@ import { RegistrationContext } from "./RegistrationContext";
 import { useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 import { auth } from "../Utilities/fireBaseConfig";
@@ -13,9 +15,9 @@ import toast from "react-hot-toast";
 const RegistrationContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  
-  const provider = new GoogleAuthProvider();
-  
+
+  const googleProvider = new GoogleAuthProvider();
+
   const singUpWithEmailAndPass = (email, password, name) => {
     console.log({ userEmail: email, userName: name });
 
@@ -57,11 +59,34 @@ const RegistrationContextProvider = ({ children }) => {
       );
   };
 
+  const googleAuth = () => {
+    signInWithPopup(auth, googleProvider)
+    .then(async (result) => {
+      await fetch(`${import.meta.env.VITE_DATABASE_URL}/createUsers`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userEmail: result.user.email,
+          userName: result.user.displayName,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) =>
+          toast.success(`${
+            data.userStatus === "User Created"
+              ? "Thanks for joining with us "
+              : "Welcome back "
+          } 
+          ${result.user.displayName || result.user.email}!!!`)
+        )
+        .catch((error) => console.log(error));
+    }).catch(error=>console.log(error));
+  };
 
   const userSingOut = () => {
-    signOut(auth)
-      .then(toast.success("Sing out successful"))
-      .catch(toast.error("Something went wrong!!! Please Contact with us."));
+    signOut(auth).then(toast.success("Sing out successful"));
   };
 
   useEffect(() => {
@@ -76,6 +101,7 @@ const RegistrationContextProvider = ({ children }) => {
     user,
     isLoading,
     userSingOut,
+    googleAuth,
     singUpWithEmailAndPass,
     singInWithEmailAndPass,
   };
