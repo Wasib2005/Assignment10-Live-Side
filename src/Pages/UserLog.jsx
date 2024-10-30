@@ -4,15 +4,16 @@ import { FaFacebookF, FaGoogle } from "react-icons/fa";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { RegistrationContext } from "../Contexts/RegistrationContext";
+import toast from "react-hot-toast";
 
 function UserLog() {
   const [singInOn, setSingInOn] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordC, setShowPasswordC] = useState(false);
   const [color, setColor] = useState(true);
-  
-  const userData = useContext(RegistrationContext)
-  console.log(userData)
+
+  const { singUpWithEmailAndPass, singInWithEmailAndPass } =
+    useContext(RegistrationContext);
 
   const singIn_singUpHandle = () => {
     setSingInOn(!singInOn);
@@ -27,7 +28,32 @@ function UserLog() {
     if (singInOn) {
       const email = form.email.value;
       const password = form.password.value;
-      console.log(email, password);
+      singInWithEmailAndPass(email, password);
+    } else {
+      const email = form.email.value;
+      const password = form.password.value;
+      const cPassword = form.cPassword.value;
+      const passwordLength = 8;
+      if (password.length <= passwordLength) {
+        toast.error(`The password must be more then ${passwordLength}`);
+        return;
+      } else if (!/[0-9]/.test(password)) {
+        toast.error("You have to use at least one digit (0-9)");
+        return;
+      } else if (!/[A-Z]/.test(password)) {
+        toast.error("You have to use at least one uppercase  (A-Z)");
+        return;
+      } else if (!/[a-z]/.test(password)) {
+        toast.error("You have to use at least one lowercase  (a-z)");
+        return;
+      } else if (!/[@#$%^&*(){}+-=?<>,.`~']/.test(password)) {
+        toast.error("You have to use at least one special character");
+        return;
+      } else if (password !== cPassword) {
+        toast.error("The passwords don't match");
+        return;
+      }
+      singUpWithEmailAndPass(email, password);
     }
   };
   return (
