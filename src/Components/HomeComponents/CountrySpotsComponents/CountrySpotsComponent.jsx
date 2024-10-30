@@ -19,7 +19,6 @@ const CountrySpotsComponent = () => {
     return <p>Loading</p>;
   }
   const { chosenCountry, result } = touristsSpotData;
-  console.log(chosenCountry, result);
   return (
     <div className="mt-[100px] text-center grid gap-3 mb-16">
       <h1 className="text-3xl md:text-5xl font-bold">

@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { CiCircleMore } from "react-icons/ci";
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { RegistrationContext } from "../Contexts/RegistrationContext";
 
 function UserLog() {
   const [singInOn, setSingInOn] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordC, setShowPasswordC] = useState(false);
   const [color, setColor] = useState(true);
+  
+  const userData = useContext(RegistrationContext)
+  console.log(userData)
 
   const singIn_singUpHandle = () => {
     setSingInOn(!singInOn);
@@ -13,16 +20,30 @@ function UserLog() {
       setColor(!color);
     }, 250);
   };
+
+  const handleRegistration = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    if (singInOn) {
+      const email = form.email.value;
+      const password = form.password.value;
+      console.log(email, password);
+    }
+  };
   return (
     <>
       <div className=" bg-slate-400 h-[100vh]">
         <div className="h-[100px] flex items-center justify-center md:mb-[100px] pt-28">
-          <img src="favicon.svg" alt="" className="w-12"/>
-          <Link to={"/"} className="text-2xl md:text-4xl font-bold">Asian Tourism Hub</Link>
+          <img src="favicon.svg" alt="" className="w-12" />
+          <Link to={"/"} className="text-2xl md:text-4xl font-bold">
+            Asian Tourism Hub
+          </Link>
         </div>
         <div
           className={`md:h-[(100vh)] ${
-            color ? "h-[calc(100vh-200px)] md:h-auto": "h-[calc(100vh-400px)] md:h-auto"
+            color
+              ? "h-[calc(100vh-200px)] md:h-auto"
+              : "h-[calc(100vh-400px)] md:h-auto"
           } flex items-center justify-center`}
         >
           <div className="flex flex-col w-[400px] md:flex-row md:w-[800px]  md:h-[500px] items-center justify-center ">
@@ -54,9 +75,13 @@ function UserLog() {
                     <CiCircleMore />
                   </button>
                 </div>
-                <form className={`flex flex-col ${color ? "gap-6" : "gap-2"}`}>
+                <form
+                  onSubmit={handleRegistration}
+                  className={`flex flex-col ${color ? "gap-6" : "gap-2"}`}
+                >
                   {color || (
                     <input
+                      required
                       type="text"
                       name="name"
                       placeholder="Your Name"
@@ -64,24 +89,63 @@ function UserLog() {
                     />
                   )}
                   <input
-                    type="text"
+                    required
+                    type="email"
                     name="email"
                     placeholder="Your Email"
                     className="p-1 border border-black rounded-md outline-none focus:border-blue-400 focus:outline-blue-400"
                   />
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Your Password"
-                    className="p-1 border border-black rounded-md outline-none focus:border-blue-400 focus:outline-blue-400"
-                  />
-                  {color || (
+                  <div className="relative">
                     <input
+                      required
+                      id="password"
                       type="password"
-                      name="cPassword"
-                      placeholder="Confirm Your Password"
-                      className="p-1 border border-black rounded-md outline-none focus:border-blue-400 focus:outline-blue-400"
+                      name="password"
+                      placeholder="Your Password"
+                      className="p-1 w-full border border-black rounded-md outline-none focus:border-blue-400 focus:outline-blue-400"
                     />
+                    <div
+                      onClick={() => {
+                        setShowPassword(!showPassword);
+                        showPassword
+                          ? document
+                              .getElementById("password")
+                              .setAttribute("type", "password")
+                          : document
+                              .getElementById("password")
+                              .setAttribute("type", "text");
+                      }}
+                      className="absolute top-2 right-2"
+                    >
+                      {showPassword ? <IoEye /> : <IoEyeOff />}
+                    </div>
+                  </div>
+                  {color || (
+                    <div className="relative">
+                      <input
+                        required
+                        id="cPassword"
+                        type="password"
+                        name="cPassword"
+                        placeholder="Confirm Your Password"
+                        className="p-1 w-full border border-black rounded-md outline-none focus:border-blue-400 focus:outline-blue-400"
+                      />
+                      <div
+                        onClick={() => {
+                          setShowPasswordC(!showPasswordC);
+                          showPasswordC
+                            ? document
+                                .getElementById("cPassword")
+                                .setAttribute("type", "password")
+                            : document
+                                .getElementById("cPassword")
+                                .setAttribute("type", "text");
+                        }}
+                        className="absolute top-2 right-2"
+                      >
+                        {showPasswordC ? <IoEye /> : <IoEyeOff />}
+                      </div>
+                    </div>
                   )}
 
                   <button

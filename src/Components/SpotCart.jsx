@@ -20,6 +20,7 @@ const SpotCart = ({ touristsSpot }) => {
   } = touristsSpot;
 
   const clickHandle = ()=>{
+    
   }
   return (
     <div className="w-full md:w-[350px] border rounded-2xl flex flex-col flex-grow p-4 gap-2 shadow-2xl hover:bg-slate-100" onClick={clickHandle}>
