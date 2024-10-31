@@ -3,6 +3,7 @@ import MainPage from "../Pages/MainPage";
 import Home from "../Pages/Home";
 import AllSpot from "../Pages/AllSpot";
 import UserLog from "../Pages/UserLog";
+import SpotDetails from "../Components/SpotDetails";
 
 export const mainRouter = createBrowserRouter([
   {
@@ -18,6 +19,12 @@ export const mainRouter = createBrowserRouter([
         path: "/AllSpot",
         element: <AllSpot />,
         loader: () => fetch(`${import.meta.env.VITE_DATABASE_URL}/spot`),
+      },
+      {
+        path: "/Spot/:SpotId",
+        element: <SpotDetails />,
+        loader: ({params}) =>
+          fetch(`${import.meta.env.VITE_DATABASE_URL}/spotData/_id/${params.SpotId}`),
       },
     ],
   },
