@@ -24,6 +24,10 @@ const SpotDetails = () => {
     user_id,
   } = data[0];
 
+  if(!data){
+    return <p>Loading</p>
+  }
+
   return (
     <div className="grid gap-8 justify-center text-xl font-medium mt-14">
       <h1 className="text-center text-4xl font-bold mb-10">{tourists_spot_name}</h1>
