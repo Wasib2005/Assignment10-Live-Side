@@ -7,6 +7,7 @@ import { Avatar, Tooltip } from "flowbite-react";
 const NavBar = () => {
   const [dropdownOff, setDropdownOff] = useState(true);
   const { user, userSingOut } = useContext(RegistrationContext);
+  console.log(dropdownOff);
   const navLink = (
     <>
       <NavLink
@@ -74,6 +75,8 @@ const NavBar = () => {
                     content={user.displayName || user.email}
                     style="light"
                     placement="bottom"
+                    animation="duration-1000"
+                    className={`${dropdownOff || "hidden"}`}
                   >
                     {user.photoURL ? (
                       <Avatar
@@ -92,21 +95,28 @@ const NavBar = () => {
                   </Tooltip>
                 </div>
                 <div
-                  className={`duration-[600ms] z-0 text-xl translate-y-[10px] absolute right-0 -bottom-4
-                     ${
-                       dropdownOff
-                         ? " translate-y-[-190px] "
-                         : " translate-y-[100px] "
-                     }
+                  className={` duration-[600ms] z-0 text-xl transition translate-y-[10px] absolute right-0 top-10 ${
+                    dropdownOff ? " translate-y-[-206px] " : " "
+                  }
                `}
                 >
                   <ul className="bg-slate-200 rounded-lg p-2 w-32 text-base text-left flex flex-col gap-2">
-                    <Link
-                      to={"/Profile"}
-                      className="rounded-lg hover:bg-blue-300"
-                    >
-                      <li className="p-2  font-semibold ">Profile</li>
-                    </Link>
+                    <div className=" rounded-lg hover:bg-blue-300">
+                      <Tooltip
+                        content={user.displayName || user.email}
+                        style="light"
+                        placement="left"
+                        animation="duration-1000"
+                        className="hover:bg-blue-300"
+                      >
+                        <Link
+                          to={"/Profile"}
+                          className=" hover:bg-blue-300"
+                        >
+                          <li className="p-2  font-semibold ">Profile</li>
+                        </Link>
+                      </Tooltip>
+                    </div>
                     {user.emailVerified || (
                       <Link
                         to={"/Profile"}
