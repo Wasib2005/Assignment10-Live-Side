@@ -6,6 +6,8 @@ import UserLog from "../Pages/UserLog";
 import SpotDetails from "../Components/SpotDetails";
 import SelectedUserList from "../Pages/SelectedUserList";
 import UpdateSpot from "../Pages/UpdateSpot";
+import MyList from "../Pages/MyList";
+import PrivateRouter from "../Components/PrivateRouter";
 
 export const mainRouter = createBrowserRouter([
   {
@@ -32,7 +34,12 @@ export const mainRouter = createBrowserRouter([
       },
       {
         path: "/user/:userId",
-        element: <SelectedUserList />,
+        element: (
+          <PrivateRouter>
+            <SelectedUserList />
+          </PrivateRouter>
+        ),
+
         loader: ({ params }) =>
           fetch(
             `${import.meta.env.VITE_DATABASE_URL}/spotData/user_id/${
@@ -42,7 +49,25 @@ export const mainRouter = createBrowserRouter([
       },
       {
         path: "/UpdateSpot",
-        element: <UpdateSpot />,
+        element: (
+          <PrivateRouter>
+            <UpdateSpot />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/MyList/:user_email",
+        element: (
+          <PrivateRouter>
+            <MyList />
+          </PrivateRouter>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `${import.meta.env.VITE_DATABASE_URL}/spotData/user_email/${
+              params.user_email
+            }`
+          ),
       },
     ],
   },

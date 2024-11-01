@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 const SpotCart = ({ touristsSpot }) => {
   const {
     _id,
+    user_email,
     average_cost,
     country_Name,
     image,
@@ -69,7 +70,7 @@ const SpotCart = ({ touristsSpot }) => {
               <CgProfile className="text-5xl" />
             </>
           )}
-          <p className="text-2xl font-bold">{user_name}</p>
+          <p className="text-2xl font-bold">{user_name||user_email}</p>
         </div>
       </div>
     </Link>

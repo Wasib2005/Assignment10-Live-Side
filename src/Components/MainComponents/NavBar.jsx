@@ -7,7 +7,7 @@ import { Avatar, Tooltip } from "flowbite-react";
 const NavBar = () => {
   const [dropdownOff, setDropdownOff] = useState(true);
   const { user, userSingOut } = useContext(RegistrationContext);
-  console.log(dropdownOff);
+  console.log(user);
   const navLink = (
     <>
       <NavLink
@@ -41,7 +41,7 @@ const NavBar = () => {
         <li className="p-2  font-semibold ">Upload Spot</li>
       </NavLink>
       <NavLink
-        to={"/My List"}
+        to={`/MyList/${user?.email}`}
         className={({ isActive }) =>
           isActive
             ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300"
