@@ -1,22 +1,83 @@
+import PropTypes from "prop-types";
+
 import { FloatingLabel, TextInput } from "flowbite-react";
 import { RegistrationContext } from "../Contexts/RegistrationContext";
 import { useContext } from "react";
+import toast from "react-hot-toast";
+import { data } from "autoprefixer";
 
-const SpotForm = ({ isUpload }) => {
+const SpotForm = ({ isUpload, isUpdate }) => {
   const { user } = useContext(RegistrationContext);
   if (!user) {
     return <p>loading</p>;
   }
+
   const { email, displayName } = user;
+  const handleUploadForm = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const tourists_spot_data = {};
+    const fields = [
+      "user_id",
+      "image",
+      "tourists_spot_name",
+      "country_Name",
+      "location",
+      "short_description",
+      "detailed_description",
+      "average_cost",
+      "seasonality",
+      "travel_time",
+      "totalVisitorsPerYear",
+      "user_email",
+      "user_name",
+    ];
+
+    await fields.forEach((field) => {
+      const input = form[field];
+      if (input) {
+        if (field === "user_email") {
+          Object.assign(tourists_spot_data, { [field]: user.email });
+        } else if (field === "user_name") {
+          Object.assign(tourists_spot_data, { [field]: user.displayName });
+        } else {
+          Object.assign(tourists_spot_data, { [field]: input.value });
+        }
+      }
+      console.log(tourists_spot_data);
+    });
+    if (isUpload) {
+      console.log(tourists_spot_data);
+      fetch(`${import.meta.env.VITE_DATABASE_URL}/UploadSpotData`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tourists_spot_data),
+      })
+        .then((res) => res.json())
+        .then((data) =>
+          data.error?
+          toast.error(
+            `${tourists_spot_data.tourists_spot_name} This spot already exists in your list`
+          ):toast.success(
+            `${tourists_spot_data.tourists_spot_name} Added successfully`
+          )
+        );
+
+      // form.reset()
+    }
+  };
 
   return (
     <div>
-      <form className="grid gap-5">
+      <form className="grid gap-5" onSubmit={handleUploadForm}>
         <div className="md:flex justify-between">
           <TextInput
             type="text"
             id="disabledInput1"
-            placeholder={displayName}
+            value={displayName}
+            name="user_name"
             disabled
             readOnly
             className="md:w-[48%]"
@@ -24,7 +85,8 @@ const SpotForm = ({ isUpload }) => {
           <TextInput
             type="text"
             id="disabledInput2"
-            placeholder={email}
+            value={email}
+            name="user_email"
             disabled
             readOnly
             className="md:w-[48%]"
@@ -37,47 +99,57 @@ const SpotForm = ({ isUpload }) => {
               name="tourists_spot_name"
               variant="outlined"
               label="Tourists Spot Name"
+              required
             />
           </div>
           <div className="md:w-[48%]">
             <FloatingLabel
               name="country_Name"
               variant="outlined"
-              label="Country Name"
+              label="Country Name (e.g. Indonesia)"
+              required
             />
           </div>
         </div>
         <hr className="border-black" />
         <div className="md:grid md:grid-cols-2 md:gap-[4%]">
           <FloatingLabel
-            name="Place_Name"
+            name="average_cost"
             variant="outlined"
-            label="Average Cost"
+            label="Average Cost (in USD)"
+            type="number"
+            className=""
+            required
           />
           <FloatingLabel
-            name="Place_Name"
+            name="seasonality"
             variant="outlined"
-            label="Seasonality"
+            label="Seasonality (e.g. Summer)"
+            required
           />
           <FloatingLabel
-            name="Place_Name"
+            name="travel_time"
             variant="outlined"
-            label="Travel Time"
+            label="Travel Time (e.g. 7 days)"
+            required
           />
           <FloatingLabel
-            name="Place_Name"
+            name="totalVisitorsPerYear"
             variant="outlined"
             label="Total Visitors Per Year"
+            type="number"
+            required
           />
         </div>
         <hr className="border-black" />
         <FloatingLabel
-          name="Place_Name"
+          name="image"
           variant="outlined"
           type="url"
           label="Photo Url"
+          required
         />
-        <FloatingLabel name="Place_Name" variant="outlined" label="Location" />
+        <FloatingLabel name="location" variant="outlined" label="Location" />
         <div className="relative">
           <textarea
             type="text"
@@ -86,7 +158,7 @@ const SpotForm = ({ isUpload }) => {
             className="peer block w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500 h-auto resize-y overflow-hidden"
             placeholder=" "
             data-testid="floating-label"
-            name="Place_Name"
+            name="short_description"
           />
           <label
             htmlFor="floatingLabel:rv:"
@@ -103,7 +175,7 @@ const SpotForm = ({ isUpload }) => {
             className="peer block w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500 h-auto resize-y overflow-hidden"
             placeholder=" "
             data-testid="floating-label"
-            name="Place_Name"
+            name="detailed_description"
           />
           <label
             htmlFor="floatingLabel:rv:"
@@ -121,6 +193,6 @@ const SpotForm = ({ isUpload }) => {
   );
 };
 
-SpotForm.propTypes = {isUpload: Prop};
+SpotForm.propTypes = { isUpload: PropTypes.bool.isRequired };
 
 export default SpotForm;

@@ -87,16 +87,16 @@ const NavBar = () => {
                     ) : (
                       <div>
                         <p>
-                          {user.displayName.slice(0, 2) ||
-                            user.email.slice(0, 2)}
+                          {user.displayName?.slice(0, 2) ||
+                            user.email?.slice(0, 2)}
                         </p>
                       </div>
                     )}
                   </Tooltip>
                 </div>
                 <div
-                  className={` duration-[600ms] z-0 text-xl transition translate-y-[10px] absolute right-0 top-10 ${
-                    dropdownOff ? " translate-y-[-206px] " : " "
+                  className={` duration-[600ms] z-0 text-xl absolute right-0 top-10 ${
+                    dropdownOff ? " transition translate-y-[-2006px] " : ""
                   }
                `}
                 >
@@ -109,21 +109,21 @@ const NavBar = () => {
                         animation="duration-1000"
                         className="hover:bg-blue-300"
                       >
-                        <Link
+                        <NavLink
                           to={"/Profile"}
                           className=" hover:bg-blue-300"
                         >
                           <li className="p-2  font-semibold ">Profile</li>
-                        </Link>
+                        </NavLink>
                       </Tooltip>
                     </div>
                     {user.emailVerified || (
-                      <Link
+                      <NavLink
                         to={"/Profile"}
                         className="rounded-lg hover:bg-blue-300"
                       >
                         <li className="p-2  font-semibold ">Verify</li>
-                      </Link>
+                      </NavLink>
                     )}
                     <button
                       onClick={userSingOut}

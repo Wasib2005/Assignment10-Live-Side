@@ -21,12 +21,12 @@ const SpotCart = ({ touristsSpot }) => {
 
   return (
     <Link to={`/Spot/${_id}`}>
-      <div className="w-full md:w-[350px] border rounded-2xl flex flex-col flex-grow p-4 gap-2 shadow-2xl hover:bg-slate-100">
-        <div className="min-h-[356px] md:min-h-[156px] border rounded-2xl">
+      <div className="w-full md:w-[350px] border rounded-2xl flex flex-col flex-grow h-full p-4 gap-2 shadow-2xl pb-6 hover:bg-slate-100">
+        <div className="min-h-[356px] md:min-h-[206px] border rounded-2xl">
           <img
             src={image}
             alt={`Photo of ${tourists_spot_name}`}
-            className="rounded-2xl w-full"
+            className="min-h-[356px] md:min-h-[156px] rounded-2xl w-full"
           />
         </div>
         <div className="px-5 grid gap-2">
