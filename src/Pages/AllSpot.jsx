@@ -1,6 +1,7 @@
 import { Select } from "flowbite-react";
 import { useEffect, useState } from "react";
 import SpotCart from "../Components/SpotCart";
+import Loader from "../Components/MainComponents/Loader";
 
 const AllSpot = () => {
   const [countryName, setCountryName] = useState(null);
@@ -42,7 +43,7 @@ const AllSpot = () => {
     setCountry(country);
   };
 
-  useEffect(() => takeCountriesNameFromDatabase, []);
+  useEffect(() => takeCountriesNameFromDatabase(), []);
   useEffect(() => {
     fetch(
       `${
@@ -54,9 +55,8 @@ const AllSpot = () => {
       .catch((error) => console.error("Error:", error));
   }, [sortBy, sortByValue, country]);
 
-
   if (!countryName) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
   return (
     <div className="text-center mt-12">
@@ -85,7 +85,7 @@ const AllSpot = () => {
               <label name="country"> Country: </label>
               <Select name="country" required>
                 <option value={"all"}>All Country</option>
-                {countryName.map((country, i) => (
+                {countryName?.map((country, i) => (
                   <option key={`country${i}`} value={country}>
                     {country}
                   </option>

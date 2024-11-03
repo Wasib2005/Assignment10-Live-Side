@@ -41,7 +41,7 @@ const RegistrationContextProvider = ({ children }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userEmail: email, userName: name }),
+          body: JSON.stringify({ userEmail: email, userName: displayName }),
         }).catch((error) => console.log(error));
       })
       .catch((error) =>
