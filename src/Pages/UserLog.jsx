@@ -5,12 +5,15 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { RegistrationContext } from "../Contexts/RegistrationContext";
 import toast from "react-hot-toast";
+import { Button, Modal } from "flowbite-react";
+import { GrGithub } from "react-icons/gr";
 
 function UserLog() {
   const [singInOn, setSingInOn] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordC, setShowPasswordC] = useState(false);
   const [color, setColor] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const location = useLocation();
 
   console.log(location);
@@ -20,6 +23,7 @@ function UserLog() {
     singInWithEmailAndPass,
     googleAuth,
     facebookAuth,
+    githubAuth,
     user,
   } = useContext(RegistrationContext);
 
@@ -118,9 +122,31 @@ function UserLog() {
                   >
                     <FaFacebookF />
                   </button>
-                  <button className="w-9 h-9 flex items-center justify-center  border rounded-full border-slate-400 hover:border-none hover:bg-slate-600">
+                  <button
+                    onClick={() => setOpenModal(true)}
+                    className="w-9 h-9 flex items-center justify-center  border rounded-full border-slate-400 hover:border-none hover:bg-slate-600"
+                  >
                     <CiCircleMore />
                   </button>
+                  <Modal
+                    dismissible
+                    show={openModal}
+                    onClose={() => setOpenModal(false)}
+                  >
+                    <Modal.Header>Terms of Service</Modal.Header>
+                    <Modal.Body>
+                      <div className="items-center flex gap-3 text-2xl justify-center">
+                        <button onClick={githubAuth} className="w-9 h-9 flex items-center justify-center  border rounded-full border-slate-400 hover:border-none hover:bg-slate-600">
+                          <GrGithub />
+                        </button>
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button color="gray" onClick={() => setOpenModal(false)}>
+                        Cancel
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
                 </div>
                 <form
                   onSubmit={handleRegistration}

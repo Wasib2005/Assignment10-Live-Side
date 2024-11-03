@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
+  GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
   sendEmailVerification,
@@ -21,6 +22,7 @@ const RegistrationContextProvider = ({ children }) => {
 
   const googleProvider = new GoogleAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
+  const githubProvider = new GithubAuthProvider();
 
   const updateUserProfile = (update, offToast = true) => {
     updateProfile(auth.currentUser, update)
@@ -120,6 +122,32 @@ const RegistrationContextProvider = ({ children }) => {
       })
       .catch((error) => console.log(error));
   };
+  const githubAuth = () => {
+    signInWithPopup(auth, githubProvider)
+      .then(async (result) => {
+        await fetch(`${import.meta.env.VITE_DATABASE_URL}/createUsers`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userEmail: result.user.email,
+            userName: result.user.displayName,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) =>
+            toast.success(`${
+              data.userStatus === "User Created"
+                ? "Thanks for joining with us "
+                : "Welcome back "
+            } 
+          ${result.user.displayName || result.user.email}!!!`)
+          )
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+  };
 
   const sendVerification = () => {
     sendEmailVerification(auth.currentUser).then(
@@ -149,6 +177,7 @@ const RegistrationContextProvider = ({ children }) => {
     updateUserProfile,
     sendVerification,
     facebookAuth,
+    githubAuth,
   };
   return (
     <RegistrationContext.Provider value={userData}>
