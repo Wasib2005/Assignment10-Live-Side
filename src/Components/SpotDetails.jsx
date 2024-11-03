@@ -1,14 +1,28 @@
+import { useContext, useEffect } from "react";
 import { CgProfile } from "react-icons/cg";
 import { FaCalendarAlt, FaLocationArrow } from "react-icons/fa";
 import { IoMdTimer } from "react-icons/io";
 import { IoLogoUsd, IoPeopleCircle } from "react-icons/io5";
 import { TfiWorld } from "react-icons/tfi";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { RegistrationContext } from "../Contexts/RegistrationContext";
+import Swal from "sweetalert2";
 
 const SpotDetails = () => {
+  const { user } = useContext(RegistrationContext);
   const data = useLoaderData();
+  const navigate = useNavigate();
+  console.log(data.length);
+
+  
+  if (!data) {
+    return <p>Loading</p>;
+  } else if (data.length === 0) {
+    return <p>No data found</p>;
+  }
 
   const {
+    _id,
     image,
     tourists_spot_name,
     short_description,
@@ -21,16 +35,45 @@ const SpotDetails = () => {
     location,
     user_photoUrl,
     user_name,
-    user_id,
+    user_email,
   } = data[0];
+  console.log(_id);
 
-  if(!data){
-    return <p>Loading</p>
-  }
+  const deleteHandle = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(
+          `${import.meta.env.VITE_DATABASE_URL}/deleteSpotData/${_id}/${
+            user.email
+          }`,
+          { method: "POST" }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            data.result === "Successfully" &&
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              }).then(navigate(-1));
+          });
+      }
+    });
+  };
 
   return (
     <div className="grid gap-8 justify-center text-xl font-medium mt-14">
-      <h1 className="text-center text-4xl font-bold mb-10">{tourists_spot_name}</h1>
+      <h1 className="text-center text-4xl font-bold mb-10">
+        {tourists_spot_name}
+      </h1>
       <div className="flex justify-center">
         <img src={image} alt={tourists_spot_name} />
       </div>
@@ -83,7 +126,7 @@ const SpotDetails = () => {
         </p>
       </div>
       <hr />
-      <Link to={`/user/${user_id}`}>
+      <Link to={`/user/${user_email}`}>
         <div className="flex items-center gap-2">
           {user_photoUrl ? (
             <img
@@ -96,11 +139,11 @@ const SpotDetails = () => {
               <CgProfile className="text-5xl" />
             </>
           )}
-          <p className="text-2xl font-bold">{user_name}</p>
+          <p className="text-2xl font-bold">{user_name || user_email}</p>
         </div>
       </Link>
       <hr />
-      <div className="w-auto">
+      <div className="w-auto flex gap-4">
         <Link
           to={-1}
           className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
@@ -109,9 +152,35 @@ const SpotDetails = () => {
           <span className="absolute inset-0 w-full h-full bg-white rounded-md " />
           <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-sky-400 rounded-md opacity-0 group-hover:opacity-100 " />
           <span className="relative text-sky-400 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white">
-            Button Text
+            Go Back
           </span>
         </Link>
+        {user?.email === user_email && (
+          <>
+            <Link
+              to={`/UpdateSpot/${_id}`}
+              className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+            >
+              <span className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-green-400 rounded-md group-hover:mt-0 group-hover:ml-0" />
+              <span className="absolute inset-0 w-full h-full bg-white rounded-md " />
+              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-green-400 rounded-md opacity-0 group-hover:opacity-100 " />
+              <span className="relative text-green-400 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white">
+                Update
+              </span>
+            </Link>
+            <button
+              onClick={deleteHandle}
+              className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+            >
+              <span className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-red-600 rounded-md group-hover:mt-0 group-hover:ml-0" />
+              <span className="absolute inset-0 w-full h-full bg-white rounded-md " />
+              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-red-600 rounded-md opacity-0 group-hover:opacity-100 " />
+              <span className="relative text-red-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white">
+                Delete
+              </span>
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

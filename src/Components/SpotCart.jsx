@@ -22,12 +22,12 @@ const SpotCart = ({ touristsSpot }) => {
 
   return (
     <Link to={`/Spot/${_id}`}>
-      <div className="w-full md:w-[350px] border rounded-2xl flex flex-col flex-grow h-full p-4 gap-2 shadow-2xl pb-6 hover:bg-slate-100">
-        <div className="min-h-[356px] md:min-h-[206px] border rounded-2xl">
+      <div className="w-full md:w-[350px] border rounded-2xl flex flex-col flex-grow h-full p-4 gap-2 shadow-2xl pb-6 hover:bg-slate-100 hover:transition hover:duration-500 hover:ease-in-out hover:scale-105">
+        <div className="min-h-[356px] md:min-h-[200px] border rounded-2xl">
           <img
             src={image}
             alt={`Photo of ${tourists_spot_name}`}
-            className="min-h-[356px] md:min-h-[156px] rounded-2xl w-full"
+            className="min-h-[356px] md:min-h-[200px] rounded-2xl w-full"
           />
         </div>
         <div className="px-5 grid gap-2">
@@ -53,9 +53,12 @@ const SpotCart = ({ touristsSpot }) => {
           </h2>
           <hr className="border-dashed border-slate-400" />
           <hr className="border-dashed border-slate-400" />
-          <h2 className="flex items-center gap-1">
-            <FaLocationDot />
-            Location: <span className="font-bold">{location}</span>
+          <h2 className="flex items-start gap-1">
+            <span className="flex items-center">
+              <FaLocationDot />
+              Location:
+            </span>
+            <span className="font-bold">{location}</span>
           </h2>
         </div>
         <div className="flex items-center gap-2">
@@ -70,7 +73,7 @@ const SpotCart = ({ touristsSpot }) => {
               <CgProfile className="text-5xl" />
             </>
           )}
-          <p className="text-2xl font-bold">{user_name||user_email}</p>
+          <p className="text-2xl font-bold">{user_name || user_email}</p>
         </div>
       </div>
     </Link>

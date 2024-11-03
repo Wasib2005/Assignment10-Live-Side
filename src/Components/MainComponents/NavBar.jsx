@@ -31,7 +31,7 @@ const NavBar = () => {
         <li className="p-2  font-semibold ">Tourist Spot</li>
       </NavLink>
       <NavLink
-        to={"/UpdateSpot"}
+        to={"/UploadSpot"}
         className={({ isActive }) =>
           isActive
             ? " text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-300"

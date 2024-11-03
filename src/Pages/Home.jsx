@@ -17,7 +17,7 @@ const Home = () => {
       <Banners />
       <SomeSpots />
       <CountrySpotsComponent />
-      <div className="text-center">
+      <div className="text-center mt-16">
         <Link
           to={"/AllSpot"}
           className="relative px-5 py-3 overflow-hidden font-medium text-sky-300 bg-gray-100 border-2 border-sky-300 rounded-lg shadow-inner group"

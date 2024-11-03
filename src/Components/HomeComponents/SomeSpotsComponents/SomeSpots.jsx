@@ -6,18 +6,23 @@ const SomeSpots = () => {
 
   const touristsSpotLoadData = () => {
     fetch(`${import.meta.env.VITE_DATABASE_URL}/random/6`)
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => setTouristsSpotData(data))
       .catch((error) => console.error("Error:", error));
   };
-
+  console.log(touristsSpotData)
   useEffect(() => {
     touristsSpotLoadData();
   }, []);
-
+  
   if (!touristsSpotData){
     return <p>Loading</p>
   }
+
+  if (touristsSpotData.length===0){
+    return <p>Loading</p>
+  }
+
 
   return (
     <div>

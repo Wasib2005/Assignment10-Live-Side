@@ -5,9 +5,11 @@ import AllSpot from "../Pages/AllSpot";
 import UserLog from "../Pages/UserLog";
 import SpotDetails from "../Components/SpotDetails";
 import SelectedUserList from "../Pages/SelectedUserList";
-import UpdateSpot from "../Pages/UpdateSpot";
+import UploadSpot from "../Pages/UploadSpot";
 import MyList from "../Pages/MyList";
 import PrivateRouter from "../Components/PrivateRouter";
+import UpdateSpot from "../Pages/UpdateSpot";
+import Profile from "../Pages/Profile";
 
 export const mainRouter = createBrowserRouter([
   {
@@ -26,7 +28,11 @@ export const mainRouter = createBrowserRouter([
       },
       {
         path: "/Spot/:SpotId",
-        element: <SpotDetails />,
+        element: (
+          <PrivateRouter>
+            <SpotDetails />
+          </PrivateRouter>
+        ),
         loader: ({ params }) =>
           fetch(
             `${import.meta.env.VITE_DATABASE_URL}/spotData/_id/${params.SpotId}`
@@ -39,21 +45,32 @@ export const mainRouter = createBrowserRouter([
             <SelectedUserList />
           </PrivateRouter>
         ),
-
         loader: ({ params }) =>
           fetch(
-            `${import.meta.env.VITE_DATABASE_URL}/spotData/user_id/${
+            `${import.meta.env.VITE_DATABASE_URL}/spotData/user_email/${
               params.userId
             }`
           ),
       },
       {
-        path: "/UpdateSpot",
+        path: "/UploadSpot",
+        element: (
+          <PrivateRouter>
+            <UploadSpot />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/UpdateSpot/:SpotId",
         element: (
           <PrivateRouter>
             <UpdateSpot />
           </PrivateRouter>
         ),
+        loader: ({ params }) =>
+          fetch(
+            `${import.meta.env.VITE_DATABASE_URL}/spotData/_id/${params.SpotId}`
+          ),
       },
       {
         path: "/MyList/:user_email",
@@ -69,6 +86,7 @@ export const mainRouter = createBrowserRouter([
             }`
           ),
       },
+      { path: "/Profile", element: <Profile /> },
     ],
   },
   {
