@@ -86,7 +86,14 @@ export const mainRouter = createBrowserRouter([
             }`
           ),
       },
-      { path: "/Profile", element: <Profile /> },
+      {
+        path: "/Profile",
+        element: (
+          <PrivateRouter>
+            <Profile />
+          </PrivateRouter>
+        ),
+      },
     ],
   },
   {

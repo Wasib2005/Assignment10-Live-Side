@@ -3,6 +3,7 @@ import { RegistrationContext } from "./RegistrationContext";
 import { useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
+  FacebookAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
   sendEmailVerification,
@@ -19,6 +20,7 @@ const RegistrationContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const googleProvider = new GoogleAuthProvider();
+  const facebookProvider = new FacebookAuthProvider();
 
   const updateUserProfile = (update, offToast = true) => {
     updateProfile(auth.currentUser, update)
@@ -92,9 +94,37 @@ const RegistrationContextProvider = ({ children }) => {
       })
       .catch((error) => console.log(error));
   };
+  const facebookAuth = () => {
+    signInWithPopup(auth, facebookProvider)
+      .then(async (result) => {
+        await fetch(`${import.meta.env.VITE_DATABASE_URL}/createUsers`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userEmail: result.user.email,
+            userName: result.user.displayName,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) =>
+            toast.success(`${
+              data.userStatus === "User Created"
+                ? "Thanks for joining with us "
+                : "Welcome back "
+            } 
+          ${result.user.displayName || result.user.email}!!!`)
+          )
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+  };
 
   const sendVerification = () => {
-    sendEmailVerification(auth.currentUser).then(toast.success(`A verification email has been sent to ${user.email}`));
+    sendEmailVerification(auth.currentUser).then(
+      toast.success(`A verification email has been sent to ${user.email}`)
+    );
   };
 
   const userSingOut = () => {
@@ -118,6 +148,7 @@ const RegistrationContextProvider = ({ children }) => {
     singInWithEmailAndPass,
     updateUserProfile,
     sendVerification,
+    facebookAuth,
   };
   return (
     <RegistrationContext.Provider value={userData}>

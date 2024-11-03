@@ -40,7 +40,7 @@ const NavBar = () => {
       >
         <li className="p-2  font-semibold ">Upload Spot</li>
       </NavLink>
-      <NavLink
+      {user&&<NavLink
         to={`/MyList/${user?.email}`}
         className={({ isActive }) =>
           isActive
@@ -49,7 +49,7 @@ const NavBar = () => {
         }
       >
         <li className="p-2  font-semibold ">My List</li>
-      </NavLink>
+      </NavLink>}
     </>
   );
   return (
@@ -57,7 +57,7 @@ const NavBar = () => {
       <nav className="p-4 bg-gray-100 text-gray-800 fixed w-full z-[990] ">
         <div className="container flex justify-between items-center h-16 mx-auto">
           <Link className="flex items-center">
-            <img src="favicon.svg" alt="icon" className="w-[50px]" />
+            <img src="/src/assets/icon.svg" alt="icon" className="w-[50px]" />
             <h1 className="text-4xl font-bold">Asian Tourism Hub</h1>
           </Link>
 

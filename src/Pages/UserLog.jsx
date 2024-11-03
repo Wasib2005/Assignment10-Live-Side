@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { CiCircleMore } from "react-icons/ci";
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
 import { IoEye, IoEyeOff } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { RegistrationContext } from "../Contexts/RegistrationContext";
 import toast from "react-hot-toast";
 
@@ -11,12 +11,15 @@ function UserLog() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordC, setShowPasswordC] = useState(false);
   const [color, setColor] = useState(true);
+  const location = useLocation();
+
+  console.log(location);
 
   const {
     singUpWithEmailAndPass,
     singInWithEmailAndPass,
     googleAuth,
-    userSingOut,
+    facebookAuth,
     user,
   } = useContext(RegistrationContext);
 
@@ -63,10 +66,14 @@ function UserLog() {
       singUpWithEmailAndPass(email, password, name);
     }
   };
+
+  if (user) {
+    return <Navigate to={location?.state ? location.state : "/"} />;
+  }
+
   return (
     <>
-      <div className=" bg-slate-400 h-[100vh]">
-        <button onClick={userSingOut}>fddsg</button>
+      <div className=" bg-slate-300 h-[100vh]">
         <div className="h-[100px] flex items-center justify-center md:mb-[100px] pt-28">
           <img src="favicon.svg" alt="" className="w-12" />
           <Link to={"/"} className="text-2xl md:text-4xl font-bold">
@@ -105,7 +112,10 @@ function UserLog() {
                   >
                     <FaGoogle />
                   </button>
-                  <button className="w-9 h-9 flex items-center justify-center  border rounded-full border-slate-400 hover:border-none hover:bg-slate-600">
+                  <button
+                    onClick={facebookAuth}
+                    className="w-9 h-9 flex items-center justify-center  border rounded-full border-slate-400 hover:border-none hover:bg-slate-600"
+                  >
                     <FaFacebookF />
                   </button>
                   <button className="w-9 h-9 flex items-center justify-center  border rounded-full border-slate-400 hover:border-none hover:bg-slate-600">
