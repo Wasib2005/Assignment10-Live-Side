@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { CgProfile } from "react-icons/cg";
 import { FaCalendarAlt, FaLocationArrow } from "react-icons/fa";
 import { IoMdTimer } from "react-icons/io";
@@ -7,16 +7,16 @@ import { TfiWorld } from "react-icons/tfi";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { RegistrationContext } from "../Contexts/RegistrationContext";
 import Swal from "sweetalert2";
+import Loader from "./MainComponents/Loader";
 
 const SpotDetails = () => {
-  const { user } = useContext(RegistrationContext);
+  const { user,isLoading } = useContext(RegistrationContext);
   const data = useLoaderData();
   const navigate = useNavigate();
   console.log(data.length);
 
-  
-  if (!data) {
-    return <p>Loading</p>;
+  if (!data && isLoading) {
+    return <Loader />;
   } else if (data.length === 0) {
     return <p>No data found</p>;
   }

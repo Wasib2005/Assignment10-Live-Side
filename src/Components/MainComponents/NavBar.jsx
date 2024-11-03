@@ -6,7 +6,7 @@ import { Avatar, Tooltip } from "flowbite-react";
 
 const NavBar = () => {
   const [dropdownOff, setDropdownOff] = useState(true);
-  const { user, userSingOut } = useContext(RegistrationContext);
+  const { user, userSingOut,sendVerification } = useContext(RegistrationContext);
   console.log(user);
   const navLink = (
     <>
@@ -102,28 +102,27 @@ const NavBar = () => {
                 >
                   <ul className="bg-slate-200 rounded-lg p-2 w-32 text-base text-left flex flex-col gap-2">
                     <div className=" rounded-lg hover:bg-blue-300">
-                      <Tooltip
-                        content={user.displayName || user.email}
-                        style="light"
-                        placement="left"
-                        animation="duration-1000"
-                        className="hover:bg-blue-300"
-                      >
-                        <NavLink
-                          to={"/Profile"}
-                          className=" hover:bg-blue-300"
+                      <NavLink to={"/Profile"}>
+                        <Tooltip
+                          content={user.displayName || user.email}
+                          style="light"
+                          placement="left"
+                          animation="duration-1000"
+                          className="hover:bg-blue-300"
                         >
-                          <li className="p-2  font-semibold ">Profile</li>
-                        </NavLink>
-                      </Tooltip>
+                          <p
+                          // to={"/Profile"}
+                          // className=" hover:bg-blue-300 w-full"
+                          >
+                            <li className="p-2  font-semibold ">Profile</li>
+                          </p>
+                        </Tooltip>
+                      </NavLink>
                     </div>
                     {user.emailVerified || (
-                      <NavLink
-                        to={"/Profile"}
-                        className="rounded-lg hover:bg-blue-300"
-                      >
+                      <Link onClick={sendVerification} className="rounded-lg hover:bg-blue-300">
                         <li className="p-2  font-semibold ">Verify</li>
-                      </NavLink>
+                      </Link>
                     )}
                     <button
                       onClick={userSingOut}

@@ -6,13 +6,14 @@ import { useContext } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import Loader from "./MainComponents/Loader";
 
 const SpotForm = ({ isUpload, spotData, id }) => {
-  const { user } = useContext(RegistrationContext);
-  const navigate = useNavigate()
+  const { user, isLoading } = useContext(RegistrationContext);
+  const navigate = useNavigate();
 
-  if (!user) {
-    return <p>loading</p>;
+  if (!user && isLoading) {
+    return <Loader />;
   }
   console.log(isUpload);
 
@@ -89,7 +90,7 @@ const SpotForm = ({ isUpload, spotData, id }) => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(updateData),
-          }).then(navigate(-1))
+          }).then(navigate(-1));
 
           Swal.fire("Saved!", "", "success");
         } else if (result.isDenied) {

@@ -5,9 +5,11 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   onAuthStateChanged,
+  sendEmailVerification,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../Utilities/fireBaseConfig";
 import toast from "react-hot-toast";
@@ -18,11 +20,16 @@ const RegistrationContextProvider = ({ children }) => {
 
   const googleProvider = new GoogleAuthProvider();
 
-  const singUpWithEmailAndPass = (email, password, name) => {
-    console.log({ userEmail: email, userName: name });
+  const updateUserProfile = (update, offToast = true) => {
+    updateProfile(auth.currentUser, update)
+      .then(offToast && toast.success("Profile Update successful!!!"))
+      .catch((error) => console.log(error));
+  };
 
+  const singUpWithEmailAndPass = (email, password, displayName) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (result) => {
+        await updateUserProfile({ displayName }, false);
         await toast.success(`Thanks for joining with us,
           ${result.user.displayName || result.user.email}!!!`);
         await fetch(`${import.meta.env.VITE_DATABASE_URL}/createUsers`, {
@@ -61,28 +68,33 @@ const RegistrationContextProvider = ({ children }) => {
 
   const googleAuth = () => {
     signInWithPopup(auth, googleProvider)
-    .then(async (result) => {
-      await fetch(`${import.meta.env.VITE_DATABASE_URL}/createUsers`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userEmail: result.user.email,
-          userName: result.user.displayName,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) =>
-          toast.success(`${
-            data.userStatus === "User Created"
-              ? "Thanks for joining with us "
-              : "Welcome back "
-          } 
+      .then(async (result) => {
+        await fetch(`${import.meta.env.VITE_DATABASE_URL}/createUsers`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userEmail: result.user.email,
+            userName: result.user.displayName,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) =>
+            toast.success(`${
+              data.userStatus === "User Created"
+                ? "Thanks for joining with us "
+                : "Welcome back "
+            } 
           ${result.user.displayName || result.user.email}!!!`)
-        )
-        .catch((error) => console.log(error));
-    }).catch(error=>console.log(error));
+          )
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const sendVerification = () => {
+    sendEmailVerification(auth.currentUser).then(toast.success(`A verification email has been sent to ${user.email}`));
   };
 
   const userSingOut = () => {
@@ -104,6 +116,8 @@ const RegistrationContextProvider = ({ children }) => {
     googleAuth,
     singUpWithEmailAndPass,
     singInWithEmailAndPass,
+    updateUserProfile,
+    sendVerification,
   };
   return (
     <RegistrationContext.Provider value={userData}>
