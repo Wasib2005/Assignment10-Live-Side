@@ -15,7 +15,6 @@ const SpotForm = ({ isUpload, spotData, id }) => {
   if (!user && isLoading) {
     return <Loader />;
   }
-  console.log(isUpload);
 
   const { email, displayName, photoURL } = user;
   const handleUploadForm = async (e) => {
@@ -49,12 +48,12 @@ const SpotForm = ({ isUpload, spotData, id }) => {
           Object.assign(tourists_spot_data, { [field]: input.value });
         }
       }
-      console.log(tourists_spot_data);
+
     });
     Object.assign(tourists_spot_data, { user_photoUrl: photoURL });
 
     if (isUpload) {
-      console.log(tourists_spot_data);
+
       fetch(`${import.meta.env.VITE_DATABASE_URL}/UploadSpotData`, {
         method: "POST",
         headers: {

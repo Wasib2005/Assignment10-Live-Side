@@ -7,7 +7,7 @@ import { Avatar, Tooltip } from "flowbite-react";
 const NavBar = () => {
   const [dropdownOff, setDropdownOff] = useState(true);
   const { user, userSingOut,sendVerification } = useContext(RegistrationContext);
-  console.log(user);
+
   const navLink = (
     <>
       <NavLink

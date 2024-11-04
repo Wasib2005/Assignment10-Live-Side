@@ -10,7 +10,6 @@ const SomeSpots = () => {
       .then((data) => setTouristsSpotData(data))
       .catch((error) => console.error("Error:", error));
   };
-  console.log(touristsSpotData)
   useEffect(() => {
     touristsSpotLoadData();
   }, []);

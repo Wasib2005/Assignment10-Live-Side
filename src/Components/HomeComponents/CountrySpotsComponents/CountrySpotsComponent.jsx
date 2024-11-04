@@ -14,7 +14,7 @@ const CountrySpotsComponent = () => {
   useEffect(() => {
     touristsSpotLoadData();
   }, []);
-  console.log(touristsSpotData);
+
   if (!touristsSpotData) {
     return <p>Loading</p>;
   } else if (touristsSpotData.length === 0) {

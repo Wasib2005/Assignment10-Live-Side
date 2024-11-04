@@ -3,7 +3,7 @@ import SpotCart from "../Components/SpotCart";
 
 const MyList = () => {
   const data = useLoaderData();
-  console.log(data);
+
   return (
     <div>
       <h1 className="text-2xl md:text-4xl font-bold text-center mt-10 lg:text-6xl">

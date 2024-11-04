@@ -16,7 +16,7 @@ function UserLog() {
   const [openModal, setOpenModal] = useState(false);
   const location = useLocation();
 
-  console.log(location);
+
 
   const {
     singUpWithEmailAndPass,
@@ -43,7 +43,7 @@ function UserLog() {
       singInWithEmailAndPass(email, password);
     } else {
       const name = form.name.value;
-      console.log(name);
+
       const email = form.email.value;
       const password = form.password.value;
       const cPassword = form.cPassword.value;

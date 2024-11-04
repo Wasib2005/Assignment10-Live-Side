@@ -17,7 +17,7 @@ const Banner = ({ touristsSpot }) => {
         <img
           src={image}
           alt=""
-          className="m-auto h-[220px] md:h-[320px] lg:h-[600px] w-[600px] md:w-[700px] lg:w-[1200px]"
+          className="m-auto h-[320px] md:h-[320px] lg:h-[600px] w-[600px] md:w-[700px] lg:w-[1200px]"
         />
         <div className="absolute top-0 border bg-black opacity-30 w-full h-full z-[1]" />
         <div className="absolute top-6 md:top-20 lg:top-32 left-[84px]  z-[2] grid gap-3 lg:gap-7">

@@ -4,7 +4,7 @@ import SpotCart from "../Components/SpotCart";
 const SelectedUserList = () => {
   const data = useLoaderData();
   const { user_name } = data[0];
-  console.log(user_name);
+
   if(!data){
     return<p>Loading</p>
   }

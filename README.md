@@ -1,8 +1,26 @@
-# React + Vite
+<img src="/public/favicon.svg" alt="Asian Tourism Hub" height="50">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Asian Tourism Hub
 
-Currently, two official plugins are available:
+## Live site
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Asian Tourism Hub](https://asian-tourism-hub.web.app/)
+
+  or
+
+- [Asian Tourism Hub](https://asian-tourism-hub.firebaseapp.com/)
+
+## Resources
+
+- [Vite](https://vite.dev/)
+- [React Router Dom](https://reactrouter.com/en/main)
+- [Tailwindcss](https://tailwindcss.com/)
+- [Flowbite React](https://flowbite-react.com/)
+- [TailwindCSS Buttons](https://devdojo.com/tailwindcss/buttons)
+- [react-icons](https://react-icons.github.io/react-icons/)
+- [Dotenv](https://www.npmjs.com/package/dotenv)
+- [Firebase](https://firebase.google.com/)
+- [React Hot Toast](https://react-hot-toast.com/)
+- [React Loading Indicators](https://react-loading-indicators.netlify.app/)
+- [sweetalert2](https://sweetalert2.github.io/)
+- [Tailwindcss Animated](https://www.tailwindcss-animated.com/)

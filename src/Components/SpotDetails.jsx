@@ -13,7 +13,7 @@ const SpotDetails = () => {
   const { user,isLoading } = useContext(RegistrationContext);
   const data = useLoaderData();
   const navigate = useNavigate();
-  console.log(data.length);
+
 
   if (!data && isLoading) {
     return <Loader />;
@@ -37,7 +37,7 @@ const SpotDetails = () => {
     user_name,
     user_email,
   } = data[0];
-  console.log(_id);
+
 
   const deleteHandle = () => {
     Swal.fire({

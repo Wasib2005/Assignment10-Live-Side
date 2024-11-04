@@ -54,7 +54,7 @@ const RegistrationContextProvider = ({ children }) => {
   };
 
   const singInWithEmailAndPass = (email, password) => {
-    console.log(email, password);
+
     signInWithEmailAndPassword(auth, email, password)
       .then((result) =>
         toast.success(
@@ -166,7 +166,7 @@ const RegistrationContextProvider = ({ children }) => {
     });
     return () => unSubscribe();
   }, []);
-  console.log(user);
+
   const userData = {
     user,
     isLoading,

@@ -8,7 +8,7 @@ const PrivateRouter = ({ children }) => {
   const { user, isLoading } = useContext(RegistrationContext);
 
   const location = useLocation();
-  console.log(location.pathname);
+
 
   if (isLoading) {
     return <Loader />;
